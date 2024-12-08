@@ -10,7 +10,7 @@ pip install fairytaler
 
 # How to Use
 
-You do not need to pre-download anything, necessary data will be downloaded at runtime.
+You do not need to pre-download anything, necessary data will be downloaded at runtime. Weights will be fetched from [HuggingFace.](https://huggingface.co/benjamin-paine/fairytaler)
 
 ## Command Line
 
@@ -27,7 +27,11 @@ Many options are available, for complete documentation run `fairytaler --help`.
 ```py
 from fairytaler import F5TTSPipeline
 
-pipeline = F5TTSPipeline.from_pretrained("benjamin-paine/fairytaler", device="auto")
+pipeline = F5TTSPipeline.from_pretrained(
+  "benjamin-paine/fairytaler",
+  variant="fp16", # Omit for float32
+  device="auto"
+)
 output_wav_file = pipeline(
   text="Hello, this is some test audio!",
   reference_audio="examples/reference.wav",
