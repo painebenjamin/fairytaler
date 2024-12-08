@@ -497,7 +497,7 @@ class F5TTSPipeline:
         :param cfg_strength: The strength of classifier-free guidance.
         :param fix_duration: The fixed duration of the synthesized audio.
         :param output_format: The format of the output audio.
-        :param output_save: Whether to upload the output audio to the configured storage backend, or return the audio data directly.
+        :param output_save: Whether to save the output audio, or return the audio data directly.
         :return: The synthesized audio.
         """
         import torch
