@@ -1,0 +1,9 @@
+@misc{vansegbroeck2019dipcodinnerparty,
+      title={DiPCo -- Dinner Party Corpus}, 
+      author={Maarten Van Segbroeck and Ahmed Zaid and Ksenia Kutsenko and Cirenia Huerta and Tinh Nguyen and Xuewen Luo and Björn Hoffmeister and Jan Trmal and Maurizio Omologo and Roland Maas},
+      year={2019},
+      eprint={1909.13447},
+      archivePrefix={arXiv},
+      primaryClass={eess.AS},
+      url={https://arxiv.org/abs/1909.13447}, 
+}
