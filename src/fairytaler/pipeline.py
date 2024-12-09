@@ -378,7 +378,8 @@ class F5TTSPipeline:
         cfg_strength: float=2.0,
         fix_duration: Optional[float]=None,
         use_tqdm: bool=False,
-        chunk_batch_size: int=1
+        chunk_callback: Optional[Callable[[AudioResultType], None]]=None,
+        chunk_callback_format: AUDIO_OUTPUT_FORMAT_LITERAL="float",
     ) -> torch.Tensor:
         """
         Synthesize audio from text.
@@ -442,7 +443,18 @@ class F5TTSPipeline:
                 if rms < target_rms:
                     audio = audio * rms / target_rms
 
-                audio = audio.squeeze().cpu()
+                audio = audio.cpu()
+
+                if chunk_callback is not None:
+                    callback_audio = self.get_output_from_audio_result(
+                        audio,
+                        output_format=chunk_callback_format,
+                        output_save=False,
+                        return_first_item=True
+                    )
+                    chunk_callback(callback_audio)
+
+                audio = audio.squeeze(0) # Remove channel dimension
 
                 if (i < num_texts - 1 or j < num_text_chunks - 1):
                     pause = self.get_punctuation_pause(text_chunk)
@@ -478,6 +490,8 @@ class F5TTSPipeline:
         cfg_strength: float=2.0,
         fix_duration: Optional[float]=None,
         use_tqdm: bool=False,
+        chunk_callback: Optional[Callable[[AudioResultType], None]]=None,
+        chunk_callback_format: AUDIO_OUTPUT_FORMAT_LITERAL="float",
         output_format: AUDIO_OUTPUT_FORMAT_LITERAL="wav",
         output_save: bool=False,
     ) -> AudioResultType:
@@ -547,7 +561,9 @@ class F5TTSPipeline:
                 num_steps=num_steps,
                 cfg_strength=cfg_strength,
                 fix_duration=fix_duration,
-                use_tqdm=use_tqdm
+                use_tqdm=use_tqdm,
+                chunk_callback=chunk_callback,
+                chunk_callback_format=chunk_callback_format
             )
 
             # This utility method will get the requested format
