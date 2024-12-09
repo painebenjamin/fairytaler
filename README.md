@@ -62,6 +62,8 @@ def __call__(
     use_tqdm: bool=False,
     output_format: AUDIO_OUTPUT_FORMAT_LITERAL="wav",
     output_save: bool=False,
+    chunk_callback: Optional[Callable[[AudioResultType], None]]=None,
+    chunk_callback_format: AUDIO_OUTPUT_FORMAT_LITERAL="float",
 ) -> AudioResultType
 ```
 
